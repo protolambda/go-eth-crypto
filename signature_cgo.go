@@ -23,8 +23,7 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	"github.com/protolambda/go-secp256k1"
 )
 
 // Ecrecover returns the uncompressed public key that created the given signature.
@@ -55,7 +54,7 @@ func Sign(digestHash []byte, prv *ecdsa.PrivateKey) (sig []byte, err error) {
 	if len(digestHash) != DigestLength {
 		return nil, fmt.Errorf("hash is required to be exactly %d bytes (%d)", DigestLength, len(digestHash))
 	}
-	seckey := math.PaddedBigBytes(prv.D, prv.Params().BitSize/8)
+	seckey := paddedBigBytes(prv.D, prv.Params().BitSize/8)
 	defer zeroBytes(seckey)
 	return secp256k1.Sign(digestHash, seckey)
 }
