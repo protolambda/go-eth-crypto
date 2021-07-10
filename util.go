@@ -20,7 +20,7 @@ func paddedBigBytes(bigint *big.Int, n int) []byte {
 		return bigint.Bytes()
 	}
 	ret := make([]byte, n)
-	readBits(bigint, ret)
+	ReadBits(bigint, ret)
 	return ret
 }
 
@@ -31,9 +31,9 @@ const (
 	wordBytes = wordBits / 8
 )
 
-// readBits encodes the absolute value of bigint as big-endian bytes. Callers must ensure
+// ReadBits encodes the absolute value of bigint as big-endian bytes. Callers must ensure
 // that buf has enough space. If buf is too short the result will be incomplete.
-func readBits(bigint *big.Int, buf []byte) {
+func ReadBits(bigint *big.Int, buf []byte) {
 	i := len(buf)
 	for _, d := range bigint.Bits() {
 		for j := 0; j < wordBytes && i > 0; j++ {
